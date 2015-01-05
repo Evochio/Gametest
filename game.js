@@ -11,55 +11,6 @@ var game = {
   
   player: {}, // gets initialized in start function
 
-  rooms: {
-    /*
-     Room objects should have the following properties:
-     * goesTo: array of room IDs that can be traveled to
-     * items: array of item IDs you pick up when you enter the room
-     * points: number of points awarded when you enter the room
-     * health: number of HP awarded when you enter the room
-     * description: string, which is shown when you enter the room
-     */
-
-    'start': {
-      goesTo: function(){return ['forest', 'tall-grass']},
-      description: "You awake. You struggle to remember where you are. You fell off your horse and struck your head. Both your horse and pack are gone. You are in a field, the sun his high and hot in the sky."
-    },
-    'forest': {
-      goesTo: ['cave', 'path', 'field'],
-      description: "The forest is dense and cool. The tall trees shade the sun. A ",
-    },
-    'tall-grass': {
-      goesTo: ['field'],
-      description: "You pace into the tall grass. The grass gets progressively more difficult to travel through, you cannot see where you are going. But you suddenly do stumble onto a large branch",
-      points: 10,
-      items: ['branch']
-    },
-    'field': {
-      goesTo: ['tall-grass', 'forest'],
-      description: "You are back at the field where you awoke."
-    },
-	'cave': {
-		goesTo: function() { 
-			if (game.player.inventory.indexOf('branch') === -1){
-				return ['forest', 'path']
-			}
-			else {
-				return ['forest', 'path', 'cave2' ]
-			}
-		},
-		description: "Nothing in here but a slumbering bear. Perhaps you should leave it alone.",
-		points: 20
-    },
-   'cave2': {
-	   description: "You hit the bear with a stick. It looks peeved."
-    },
-    'path': {
-      description: "You walk along the path. It appears to be track seldom trodden by man. Suddenly a large Reindeer blocks your path ahead. It looks at you.",
-      point: 11
-      
-    }
-  },
 
     
   // GAME FUNCTIONS
@@ -91,6 +42,8 @@ var game = {
     // Print location
     console.log(this.player.location.toUpperCase(), ':', roomObject.description);
     
+	$("body").empty().append($("<div></div>").text(roomObject.description));
+	
     // Print inventory
     if(this.player.inventory.length === 0) {
       console.log('You got nothin\'');
@@ -136,7 +89,7 @@ var game = {
     
     var roomObject = this.rooms[this.player.location];
 
-    if(roomObject.goesTo.join && roomObject.goesTo.indexOf(place) === -1) {
+    if(_.isArray(roomObject.goesTo) && _.contains(roomObject.goesTo, place)) {
       // user error
       console.log("Uh, you can't go there...");
       return;
