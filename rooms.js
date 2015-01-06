@@ -10,7 +10,8 @@
 
     'start': {
       goesTo: function(){return ['forest', 'tall-grass']},
-      description: "You awake. You struggle to remember where you are. You fell off your horse and struck your head. Both your horse and pack are gone. You are in a field, the sun his high and hot in the sky."
+      description: "You awake. You struggle to remember where you are. You fell off your horse and struck your head. \
+	  Both your horse and pack are gone. You are in a field, the sun his high and hot in the sky."
     },
     'forest': {
       goesTo: function(){return ['cave', 'path', 'field']},
@@ -18,7 +19,8 @@
     },
     'tall-grass': {
       goesTo: function(){return ['field']},
-      description: "You pace into the tall grass. The grass gets progressively more difficult to travel through, you cannot see where you are going.  But you suddenly do stumble onto a large branch",
+      description: "You pace into the tall grass. The grass gets progressively more difficult to travel through,\
+	  you cannot see where you are going.  But you suddenly do stumble onto a large branch",
       points: 10,
       items: ['branch']
     },
@@ -57,11 +59,13 @@
       
     },
 	'branch2': {
-		goesTo: function(){return ['cottage', 'burrow' ]},
+		goesTo: function(){
+			(game.player.inventory = _.without(game.player.inventory, 'branch'));
+			return ['cottage', 'burrow' ]},
 		description: "You bap the large caribou on the nose. It snorts at you and levels its antlers at you and charges. \
 		You end up tangled up in the antlers carried along in its wild charge through the forest",
-		items: ['branch'],  //How do i remove branch? 
-		points: 10
+		points: 10,
+		//
 	},
 	'reindeer': {
 		description: "For whatever reason, you decide to press up against the large reindeer in wonder. \
@@ -79,7 +83,7 @@
 		description "A large gator, wearing suspenders and a hat lounges in a rocking-chair at the cottage. He inspects you closely for your accumulated points. He hungrily licks his chops"*/]
 		 }
 	},
-  // description: "A large gator, wearing suspenders and a hat lounges in a rocking-chair at the cottage. He inspects you closely for your accumulated points."
+  description: "A large gator, wearing suspenders and a hat lounges in a rocking-chair at the cottage. He inspects you closely for your accumulated points."
 	},
 	'victory': {
 		description: "You win!"
